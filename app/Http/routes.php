@@ -1,16 +1,16 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
+Route::get('/', 'DashboardController@index');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+# People
+Route::get('people/orphans', 'PeopleController@orphans');
+Route::post('people/{id}/attach-to-family', 'PeopleController@attachToFamily');
+Route::resource('people', 'PeopleController');
+
+# Family
+Route::get('/families/available-positions', 'FamiliesController@availablePositions');
+Route::post('/families/potential-mothers', 'FamiliesController@potentialMothers');
+Route::resource('families', 'FamiliesController');
+
+Route::auth();
+
