@@ -14,6 +14,15 @@ class FamiliesController extends Controller
         return Family::all();
     }
 
+    public function empty()
+    {
+        $families = Family::all();
+
+        return $families->filter(function ($item) {
+            return ! $item->people->count();
+        });
+    }
+
     public function store(Request $request)
     {
         Family::create($request->all());
@@ -34,6 +43,6 @@ class FamiliesController extends Controller
 
     public function potentialMothers(Request $request)
     {
-        # code...
+        
     }
 }

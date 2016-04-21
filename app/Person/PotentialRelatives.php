@@ -19,14 +19,24 @@ class PotentialRelatives
     {
         if ($this->person->hasMother()) return [];
 
-        return Person::whereGender('female')->whereNull('family_id')->where('id', '!=', $this->person->id)->get();
+        return Person::whereGender('female')
+            ->where(function ($query) {
+                $query->whereFamilyId($this->familyId);
+                $query->orWhere('family_id', $this->familyId);
+            })
+            ->where('id', '!=', $this->person->id)->get();
     }
 
     public function fathers()
     {
         if ($this->person->hasFather()) return [];
 
-        return Person::whereGender('male')->whereNull('family_id')->where('id', '!=', $this->person->id)->get();
+        return Person::whereGender('male')
+            ->where(function ($query) {
+                $query->whereFamilyId($this->familyId);
+                $query->orWhere('family_id', $this->familyId);
+            })
+            ->where('id', '!=', $this->person->id)->get();
     }
 
     public function spouses()
@@ -38,7 +48,7 @@ class PotentialRelatives
         return Person::whereGender($desiredGender)
             ->where('id', '!=', $this->person->id)
             ->whereNull('spouse_id')
-            ->whereNull('family_id')
+            
             ->get();
     }
 

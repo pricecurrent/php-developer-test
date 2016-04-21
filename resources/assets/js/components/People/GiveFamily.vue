@@ -37,7 +37,7 @@
                     </select>
                 </div>
 
-                <div class="form-group" v-show="potentialSpouses.length">
+               <!--  <div class="form-group" v-show="potentialSpouses.length">
                     <label>Pick a spouse</label>
                     <select class="form-control" v-model="newFamily.spouse_id">
                         <option v-for="person in potentialSpouses"
@@ -46,7 +46,7 @@
                             {{ person.name }}
                         </option>
                     </select>
-                </div>
+                </div> -->
             </div>
         </div>
 

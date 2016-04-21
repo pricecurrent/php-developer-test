@@ -22,4 +22,9 @@ class Person extends Model
             'spouses' => $relatives->spouses(),
         ]);
     }
+
+    public function isOrphan()
+    {
+        return !! $this->family_id ? false : true;
+    }
 }

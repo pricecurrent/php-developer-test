@@ -10,6 +10,7 @@ Route::resource('people', 'PeopleController');
 # Family
 Route::get('/families/available-positions', 'FamiliesController@availablePositions');
 Route::post('/families/potential-mothers', 'FamiliesController@potentialMothers');
+Route::get('families/empty', 'FamiliesController@empty');
 Route::resource('families', 'FamiliesController');
 
 Route::auth();

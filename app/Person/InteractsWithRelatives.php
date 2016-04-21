@@ -27,6 +27,25 @@ trait InteractsWithRelatives
         return $this->belongsTo(Person::class, 'spouse_id');
     }
 
+    public function siblings()
+    {
+        if (! $this->father_id || ! $this->mother_id) return [];
+
+        $query = Person::where('id', '!=', $this->id);
+        $query = $query->whereFatherId($this->father_id)->whereMotherId($this->mother_id);
+
+        return $query->get();
+    }
+
+    public function children()
+    {
+        if ($this->gender == 'male') {
+            return Person::whereFatherId($this->id)->get();
+        }
+
+        return Person::whereMotherId($this->id)->get();
+    }
+
     public function hasFamily()
     {
         return $this->family;

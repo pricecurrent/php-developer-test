@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Person;
 use App\Http\Requests;
+use App\Jobs\NotifySlack;
 use Illuminate\Http\Request;
 use App\Jobs\WelcomeNewFamilyMembers;
 
@@ -11,9 +12,9 @@ class PeopleController extends Controller
 {
     public function index()
     {
-        $currentView = 'peopleView';
+        $people = Person::whereNotNull('family_id')->get();
 
-        return view('people.index', compact('currentView'));
+        return view('people.index', compact('people'));
     }
 
     public function orphans()
@@ -23,7 +24,9 @@ class PeopleController extends Controller
 
     public function store(Request $request)
     {
-        Person::create($request->all());
+        $person = Person::create($request->all());
+
+        $this->dispatch(new NotifySlack($person));
 
         return response()->json([
             'status' => 'ok'

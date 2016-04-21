@@ -1,9 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.app', ['currentView' => 'peopleView'])
 
 @section('content')
     <add-person :show.sync="showNewPersonModal"></add-person>
     <add-family :show.sync="showNewFamilyModal"></add-family>
-    <div class="col-sm-6">
+    <div class="col-sm-4">
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
                 <h3 class="panel-title pull-left">People with no family :(</h3>
@@ -25,7 +25,26 @@
         </div>
     </div>
 
-    <div class="col-sm-6">
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+                <h3 class="panel-title pull-left">People with family :)</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                @foreach ($people as $person)
+                    <li class="list-group-item">
+                        <a href="/people/{{ $person->id }}">
+                            {{ $person->name }}
+                        </a>
+                    </li>
+                @endforeach
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
                 <h3 class="panel-title pull-left">
